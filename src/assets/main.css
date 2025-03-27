@@ -1,0 +1,77 @@
+body {
+  background-color: #121212;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+form label {
+  margin-right: 5px; /* 减少标签和输入框之间的间距 */
+  flex: 0 0 100px; /* 设置标签的固定宽度 */
+  font-size: 14px; /* 减小标签的字体大小 */
+  white-space: nowrap; /* 防止标签换行 */
+}
+
+form textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #add8e6; /* 设置边框颜色为淡蓝色 */
+  resize: vertical; /* 允许垂直调整大小 */
+}
+
+form button {
+  padding: 4px 8px; /* 缩小按钮的内边距 */
+  width: auto;
+  font-size: 12px;
+  min-width: 40px; /* 减小按钮的最小宽度 */
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+button {
+  width: auto; /* 修改按钮宽度为自动 */
+  padding: 6px 12px; /* 缩小按钮的内边距 */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px; /* 添加左右间距以实现对齐 */
+  min-width: 60px; /* 增加按钮的最小宽度 */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* 新增渐变字体样式 */
+.gradient-text {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientAnimation 5s infinite alternate;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
