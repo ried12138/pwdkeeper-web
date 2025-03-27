@@ -4,7 +4,7 @@
     <!-- 添加按钮到左上角 -->
     <button @click="showAddAccountModal" class="add-account-button">添加账户</button>
     <!-- 将退出按钮移动到右上角 -->
-    <button @click="confirmExit" class="exit-button">退出</button>
+    <button @click="confirmExit" class="dd-account-button">退出</button>
     <div class="filter-container">
       <select v-model="filterPlatform">
         <option value="">请选择平台</option>
