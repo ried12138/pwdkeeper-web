@@ -9,7 +9,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { verifyCode } from '../composables/useApi.js';
+import { verifyCode, getUserInfo } from '../composables/useApi.js'; // 导入 getUserInfo 函数
 
 const verifyCodeRef = ref('');
 const router = useRouter();
@@ -27,7 +27,20 @@ const verify = async () => {
   const result = await verifyCode(openId, verifyCodeRef.value);
   if (result.code === 0) {
     localStorage.setItem('token', result.data.token);
-    router.push(`/user-data?openId=${encodeURIComponent(openId)}`);
+    // 请求获取用户信息
+    const userInfoResult = await getUserInfo(openId);
+    let userName = ''; // 定义 userName 变量
+    if (userInfoResult.code === 0) {
+      userName = userInfoResult.data.userName || ''; // 获取 userName
+    } 
+    // 修改: 直接使用 route 对象的 query 参数，避免重复拼接
+    router.push({
+      path: '/user-data',
+      query: {
+        openId: encodeURIComponent(openId),
+        userName: encodeURIComponent(userName),
+      },
+    });
   } else {
     alert(result.msg);
   }

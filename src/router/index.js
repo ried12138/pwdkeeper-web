@@ -1,23 +1,30 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import VerificationView from '../views/VerificationView.vue';
-import UserDataView from '../views/UserDataView.vue';
+import { createRouter, createWebHashHistory } from 'vue-router';
+import UserDataPage from '../components/UserDataPage.vue';
+import VerificationCode from '../components/VerificationCode.vue';
+import DeepSeekPage from '../components/DeepSeekPage.vue'; 
 
 const routes = [
   {
     path: '/',
-    name: 'Verification',
-    component: VerificationView,
+    name: 'VerificationCode',
+    component: VerificationCode,
   },
   {
     path: '/user-data',
-    name: 'UserDataView',
-    component: UserDataView,
+    name: 'UserDataPage',
+    component: UserDataPage,
   },
+  {
+    path: '/deepseek',
+    name: 'DeepSeekPage',
+    component: DeepSeekPage,
+  },
+  // ... existing routes ...
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes,
 });
 
-export default router;    
+export default router;
