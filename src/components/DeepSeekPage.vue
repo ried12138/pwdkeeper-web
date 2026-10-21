@@ -182,4 +182,50 @@ const goBack = () => {
 .input-container button:hover {
   background-color: #0056b3;
 }
+
+/* ===== 手机端适配 ===== */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* 使用 dvh 跟随手机浏览器工具栏/键盘变化 */
+  .chat-container {
+    height: 78vh;
+    height: 78dvh;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .message-list {
+    height: calc(78dvh - 150px);
+    padding: 8px;
+  }
+
+  .message {
+    font-size: 15px;
+    word-break: break-word;
+  }
+
+  /* 输入区：加大点击区域，16px 避免 iOS 聚焦缩放 */
+  .input-container input {
+    height: 40px;
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .input-container button {
+    height: 40px;
+    padding: 8px 16px;
+    font-size: 15px;
+  }
+
+  .back-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+  }
+}
 </style>

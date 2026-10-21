@@ -23,7 +23,9 @@ onMounted(() => {
 });
 
 const verify = async () => {
-  const openId = new URLSearchParams(window.location.search).get('openId');
+  const urlParams = new URLSearchParams(window.location.search);
+  const openId = urlParams.get('openId');
+  const target = urlParams.get('target'); // 验证后去向：farm=农场，默认 user-data
   const result = await verifyCode(openId, verifyCodeRef.value);
   if (result.code === 0) {
     localStorage.setItem('token', result.data.token);
@@ -33,9 +35,10 @@ const verify = async () => {
     if (userInfoResult.code === 0) {
       userName = userInfoResult.data.userName || ''; // 获取 userName
     } 
-    // 修改: 直接使用 route 对象的 query 参数，避免重复拼接
+    // 根据 target 决定验证后跳转的页面
+    const path = target === 'farm' ? '/farm' : '/user-data';
     router.push({
-      path: '/user-data',
+      path,
       query: {
         openId: encodeURIComponent(openId),
         userName: encodeURIComponent(userName),
@@ -48,4 +51,31 @@ const verify = async () => {
 </script>
 
 <style scoped>
+.container {
+  box-sizing: border-box;
+}
+
+h2 {
+  margin-bottom: 24px;
+}
+
+/* 输入框字号 >=16px，避免 iOS 聚焦时自动放大 */
+input {
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 8px;
+}
+
+/* 手机端：按钮全宽、加大点击区域 */
+@media (max-width: 600px) {
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin: 8px 0 0;
+  }
+}
 </style>

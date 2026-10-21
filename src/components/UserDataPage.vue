@@ -5,9 +5,11 @@
     <a v-if="userName" @click="navigateToDeepSeek" class="deepseek-link">deepSeek R1(满血版)</a>
     <a v-else  @click.prevent="showUserNameModal" class="deepseek-link">deepSeek R1(满血版)</a>
     <!-- 添加按钮到左上角 -->
-    <button @click="showAddAccountModal" class="add-account-button">添加账户</button>
-    <!-- 将退出按钮移动到右上角 -->
-    <button @click="confirmExit" class="exit-button">退出</button>
+    <div class="header-actions">
+      <button @click="showAddAccountModal" class="add-account-button">添加账户</button>
+      <!-- 将退出按钮移动到右上角 -->
+      <button @click="confirmExit" class="exit-button">退出</button>
+    </div>
     <div class="filter-container">
       <select v-model="filterPlatform">
         <option value="" disabled>请选择平台</option>
@@ -16,7 +18,7 @@
       <input v-model="searchAccount" placeholder="请输入账号" />
       <button @click="searchByAccount" class="search-button">查询</button>
     </div>
-    <table>
+    <table class="data-table">
       <thead>
         <tr>
           <th class="platform-column">平台</th>
@@ -35,6 +37,24 @@
         </tr>
       </tbody>
     </table>
+    <!-- 手机端卡片列表（窄屏显示，宽屏隐藏） -->
+    <div class="card-list">
+      <div v-for="item in filteredUserData" :key="item.id" class="data-card">
+        <div class="card-row">
+          <span class="card-label">平台</span>
+          <span class="card-value">{{ getPlatformName(item.classType) }}</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">账号</span>
+          <span class="card-value">{{ item.account }}</span>
+        </div>
+        <div class="card-actions">
+          <button @click="showDetails(item)" class="action-button">详情</button>
+          <button @click="confirmDelete(item)" class="action-button delete-button">删除</button>
+        </div>
+      </div>
+      <div v-if="filteredUserData.length === 0" class="card-empty">暂无数据</div>
+    </div>
     <!-- 修改分页控件显示逻辑 -->
     <div v-if="userData.pages > 1" class="pagination">
       <button :disabled="!userData.hasPreviousPage" @click="changePage(userData.prePage)">上一页</button>
@@ -985,5 +1005,146 @@ form button {
   content: '数据正在提交...';
   font-size: 16px;
   color: #333;
+}
+
+/* ===== 卡片列表（默认隐藏，仅手机端显示） ===== */
+.card-list {
+  display: none;
+}
+
+.data-card {
+  background-color: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.card-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.card-label {
+  flex: 0 0 48px;
+  color: #999;
+}
+
+.card-value {
+  flex: 1;
+  color: #fff;
+  word-break: break-all;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.card-empty {
+  text-align: center;
+  color: #888;
+  padding: 24px 0;
+  font-size: 14px;
+}
+
+/* ===== 手机端整体适配 ===== */
+@media (max-width: 600px) {
+  .container {
+    padding: 12px;
+    max-width: 100%;
+  }
+
+  /* 头部按钮：由绝对定位改为常规横向排列 */
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 8px 0 12px;
+  }
+
+  .add-account-button,
+  .exit-button {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  /* 表格隐藏，改用卡片列表 */
+  .data-table {
+    display: none;
+  }
+
+  .card-list {
+    display: block;
+  }
+
+  /* 筛选栏：竖向堆叠、控件全宽 */
+  .filter-container {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .filter-container select,
+  .filter-container input {
+    flex: 1 1 100%;
+    margin-right: 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  .search-button {
+    flex: 1 1 100%;
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  /* 弹框表单：标签在上、输入在下，避免窄屏拥挤 */
+  .modal-content {
+    width: 92%;
+    max-width: 92%;
+    margin: 8% auto;
+    box-sizing: border-box;
+  }
+
+  form div {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  form label {
+    flex: none;
+    text-align: left;
+    margin: 0 0 4px;
+    font-size: 13px;
+  }
+
+  form input,
+  form textarea,
+  form select {
+    font-size: 16px;
+  }
+
+  .button-stack {
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .tooltip {
+    width: auto;
+    max-width: 90%;
+  }
 }
 </style>
